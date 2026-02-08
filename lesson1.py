@@ -39,3 +39,45 @@ shape1 = e.shape
 line1 = np.linspace(10, 20, 5)
 
 print(line1)
+
+#SLICING
+
+numbers1 = np.array(numbers)
+
+print(numbers1[0:5])
+
+print(numbers1[0:7:2])
+
+print(numbers1[[0, 1, 3, 4, 5]])
+
+print(numbers[5:15])
+
+print(numbers1[numbers1>5])
+
+print(numbers1[(numbers1%2)==0])
+
+
+numbers3 = np.arange(1, 25)
+numbers4 = numbers3.reshape(6, 4)
+
+print(numbers4)
+
+print(numbers4[2:5, 1:3])
+
+print(np.random.permutation(numbers4))
+
+
+rand1 = np.random.randint(1, 100, 10)
+rand2 = np.random.randint(1, 100, 10)
+
+print(rand1)
+print(np.sort(rand1))
+
+print(rand1*5)
+print(rand2)
+print(rand2*5)
+
+print(rand1 + rand2)
+print(rand1/rand2)
+print(rand1*rand2)
+print(rand1-rand2)
