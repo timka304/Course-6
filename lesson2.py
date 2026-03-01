@@ -111,3 +111,17 @@ print(td1)
 td2 = titanic_data.groupby(["Pclass", "Sex"])["Fare"].mean()
 
 print(td2)
+
+
+#SORTING DATA
+
+td_sort = titanic_data.sort_values(by="Pclass", ascending=True)
+
+print(td_sort)
+
+
+titanic_data["Pname"] = titanic_data["Name"].str.lower()
+
+titanic_data["name length"] = titanic_data["Pname"].str.len()
+
+print(titanic_data)
