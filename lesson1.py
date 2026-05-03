@@ -1,84 +1,54 @@
+import pandas as pd
 import numpy as np
-import random
 
-numbers = [2, 4, 5, 8, 10, 12, 21, 34, 32]
+data = pd.read_csv(r"Machine Learning\data.csv")
 
-print(numbers)
+#SEPARATING DATASET
 
-print(type(numbers))
+X = data.iloc[:, 0:3].values
 
-array = np.array(numbers)
+y = data.iloc[:, 3].values
 
-print(type(array))
+print(X, y)
 
-range1 = np.arange(1, 10, 1)
-
-print(range1)
-
-array2 = np.random.randint(1, 10, (3, 2))
-print(array2)
-
-array3 = array2.reshape(2, 3)
-
-print(array3)
-
-var = array3.ndim
-
-print(var)
-
-n = np.zeros((1, 4))
-
-print(n)
-
-e = np.ones((1,6))
-
-print(e)
-
-shape1 = e.shape
-
-line1 = np.linspace(10, 20, 5)
-
-print(line1)
-
-#SLICING
-
-numbers1 = np.array(numbers)
-
-print(numbers1[0:5])
-
-print(numbers1[0:7:2])
-
-print(numbers1[[0, 1, 3, 4, 5]])
-
-print(numbers[5:15])
-
-print(numbers1[numbers1>5])
-
-print(numbers1[(numbers1%2)==0])
+#Missing Data
 
 
-numbers3 = np.arange(1, 25)
-numbers4 = numbers3.reshape(6, 4)
+from sklearn.impute import SimpleImputer
 
-print(numbers4)
-
-print(numbers4[2:5, 1:3])
-
-print(np.random.permutation(numbers4))
+imputer = SimpleImputer(missing_values=np.nan, strategy='mean')
+imputer.fit(X[:, 1:3])
+X[:, 1:3] = imputer.transform(X[:, 1:3])
 
 
-rand1 = np.random.randint(1, 100, 10)
-rand2 = np.random.randint(1, 100, 10)
+print(X)
 
-print(rand1)
-print(np.sort(rand1))
+#Encoding Data
 
-print(rand1*5)
-print(rand2)
-print(rand2*5)
+from sklearn.preprocessing import LabelEncoder
 
-print(rand1 + rand2)
-print(rand1/rand2)
-print(rand1*rand2)
-print(rand1-rand2)
+labelen = LabelEncoder()
 
+labelen.fit(y)
+
+y = labelen.transform(y)
+
+print(y)
+
+from sklearn.compose import ColumnTransformer
+
+from sklearn.preprocessing import OneHotEncoder
+
+ctransform = ColumnTransformer(transformers= [("encoder", OneHotEncoder(), [0])], remainder= "passthrough")
+
+X = np.array(ctransform.fit_transform(X))
+
+print(X)
+
+#Splitting the Dataset and Testing
+
+from sklearn.model_selection import train_test_split
+
+Xtrain, Xtest, ytrain, ytest = train_test_split(X, y, train_size= 0.5, random_state= 3)
+
+print(Xtrain, Xtest, ytrain, ytest)
